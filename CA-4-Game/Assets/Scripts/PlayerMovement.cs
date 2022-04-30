@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -9,10 +11,10 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     Vector2 moveDirection;
     Vector3 velocity;
-    public float speed = 15f, gravity = -9.8f, groundDistance = 2f, jumpHeight = 3f, sprintModifier = 1.5f;
+    public float speed = 15f, gravity = -9.8f, groundDistance = 2f, jumpHeight = 3f, sprintModifier = 1.5f, maxHealth;
     public Transform groundCheck;
     public LayerMask groundMask;
-    private bool isGrounded, isSprinting, isSwitched, isAtButton, physicsObject, holdingObject;
+    private bool isGrounded, isSprinting, isSwitched, isAtButton, physicsObject, holdingObject, isInHazard, isAtValve;
     public Animator animator, uiAnimator;
     Animator buttonAnimator;
     AudioSource audioSource;
@@ -21,9 +23,15 @@ public class PlayerMovement : MonoBehaviour
     public GameObject camera;
     GameObject physicsItem;
     CharacterController characterController;
+    private float health;
+    [SerializeField]
+    private TextMeshProUGUI healthText;
+    [SerializeField] private Door door;
 
     void Start()
     {
+        isInHazard = false;
+        health = maxHealth;
         holdingObject = false;
         characterController = GetComponent<CharacterController>();
         isSwitched = false;
@@ -32,18 +40,38 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(health >=0)
+            healthText.text = ((int) health)+"";
         if (!isPaused)
         {
             Move();
             Sound();
         }
+        if (isInHazard)
+        {
+            health-=10*Time.deltaTime;
+        }
+        if(health <= 0)
+        {
+            StartCoroutine(Die());
+        }
+        
+    }
+
+    public void setHoldingObject(bool val)
+    {
+        holdingObject = val;
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.name.Equals("Valve Box"))
+        {
+            isAtValve = true;
+        }else
         if (other.gameObject.layer == 4)
         {
-            StartCoroutine( Die());
+            isInHazard = true;
         }else if(other.gameObject.layer == 7)
         {
             isAtButton = true;
@@ -54,12 +82,18 @@ public class PlayerMovement : MonoBehaviour
             physicsItem = other.gameObject;
         }
     }
-    private void OnTriggerExit(Collider other)
+     void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.name.Equals("Valve Box"))
+        {
+            isAtValve = false;
+        }else
         if (other.gameObject.layer == 7)
             isAtButton = false;
-        else if(other.gameObject.layer == 8)
+        else if (other.gameObject.layer == 8)
             physicsObject = false;
+        else if (other.gameObject.layer == 4)
+            isInHazard = false;
     }
 
     IEnumerator Die()
@@ -92,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnUse(InputValue input)
     {
-        print("Is Near Physics Object " + physicsObject + "\n Is Holding it? " + holdingObject);
+       // print("Is Near Physics Object " + physicsObject + "\n Is Holding it? " + holdingObject);
         if (isAtButton && !uiAnimator.GetBool("teleport"))
             StartCoroutine(teleport());
         else if (physicsObject && !holdingObject)
@@ -100,19 +134,26 @@ public class PlayerMovement : MonoBehaviour
 
 
             holdingObject = true;
-            physicsItem.transform.SetParent(this.transform);
+            physicsItem.transform.SetParent(camera.transform);
             physicsItem.GetComponent<Rigidbody>().useGravity = false;
-            physicsItem.GetComponent<Rigidbody>().isKinematic = true;
-            physicsItem.transform.position = camera.transform.position + camera.transform.forward * 3;
+            physicsItem.GetComponent<Rigidbody>().freezeRotation = true;
+            // physicsItem.GetComponent<Rigidbody>().isKinematic = true;
+            physicsItem.GetComponent<Rigidbody>().drag = 100f;
+         //   physicsItem.transform.position = this.transform.position + camera.transform.forward * 3;
         }
         else if (holdingObject)
         {
 
             holdingObject = false;
             physicsItem.GetComponent<Rigidbody>().useGravity = true;
-            physicsItem.GetComponent<Rigidbody>().isKinematic = false;
+            physicsItem.GetComponent<Rigidbody>().drag = 0f;
+             physicsItem.GetComponent<Rigidbody>().freezeRotation = false;
+            // physicsItem.GetComponent<Rigidbody>().isKinematic = false;
             physicsItem.transform.SetParent(null);
         
+        }else if (isAtValve)
+        {
+            door.OpenDoor();
         }
     }
 
