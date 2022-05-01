@@ -5,14 +5,13 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public GameObject doorObject, valve;
-    Animator doorAnimator, valveAnimator;
+    Animator doorAnimator;
     public PlayerMovement playerMovement;
-    bool hasValve;
+    bool hasValve, isOpen, valveRotating;
     // Start is called before the first frame update
     void Start()
     {
         doorAnimator = doorObject.GetComponent<Animator>();
-        valveAnimator = valve.GetComponent<Animator>();
         hasValve = false;
       // valveBox = transform.Find("Valve Box").gameObject;
     }
@@ -20,7 +19,10 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (valveRotating)
+        {
+            valve.transform.Rotate(0,1,0);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -42,9 +44,18 @@ public class Door : MonoBehaviour
 
     public void OpenDoor()
     {
-        if (hasValve)
+        if (hasValve&&!isOpen)
         {
-            
+            valveRotating = true;
+            isOpen = true;
+            doorAnimator.SetBool("Open", true);
+            StartCoroutine(stopRotating());
         }
+    }
+
+    IEnumerator stopRotating()
+    {
+        yield return new WaitForSeconds(8);
+        valveRotating=false;
     }
 }

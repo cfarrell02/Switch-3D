@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 15f, gravity = -9.8f, groundDistance = 2f, jumpHeight = 3f, sprintModifier = 1.5f, maxHealth;
     public Transform groundCheck;
     public LayerMask groundMask;
-    private bool isGrounded, isSprinting, isSwitched, isAtButton, physicsObject, holdingObject, isInHazard, isAtValve;
+    private bool isGrounded, isSprinting, isSwitched, isAtButton, physicsObject, holdingObject, isInHazard, isAtValve,isCrouching;
     public Animator animator, uiAnimator;
     Animator buttonAnimator;
     AudioSource audioSource;
@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        isCrouching = false;
         isInHazard = false;
         health = maxHealth;
         holdingObject = false;
@@ -49,15 +50,28 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isInHazard)
         {
-            health-=10*Time.deltaTime;
+            health-=50*Time.deltaTime;
         }
         if(health <= 0)
         {
-            StartCoroutine(Die());
+            Die();
         }
         
     }
 
+    public void OnCrouch(InputValue input)
+    {
+        if (isCrouching)
+        {
+            isCrouching = false;
+            characterController.height = 1.94f;
+        }
+        else
+        {
+            isCrouching=true;
+            characterController.height = 1;
+        }
+    }
     public void setHoldingObject(bool val)
     {
         holdingObject = val;
@@ -96,9 +110,9 @@ public class PlayerMovement : MonoBehaviour
             isInHazard = false;
     }
 
-    IEnumerator Die()
+    void Die()
     {
-        yield return new WaitForSeconds(1);
+     //   yield return new WaitForSeconds(1);
         isPaused = true;
         uiAnimator.SetBool("isDead", true);
         StartCoroutine(returnToMenu());
@@ -129,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
        // print("Is Near Physics Object " + physicsObject + "\n Is Holding it? " + holdingObject);
         if (isAtButton && !uiAnimator.GetBool("teleport"))
             StartCoroutine(teleport());
-        else if (physicsObject && !holdingObject)
+        if (physicsObject && !holdingObject)
         {
 
 
@@ -151,8 +165,9 @@ public class PlayerMovement : MonoBehaviour
             // physicsItem.GetComponent<Rigidbody>().isKinematic = false;
             physicsItem.transform.SetParent(null);
         
-        }else if (isAtValve)
+        } if (isAtValve)
         {
+            
             door.OpenDoor();
         }
     }
