@@ -109,7 +109,19 @@ public class PlayerMovement : MonoBehaviour
         else if (other.gameObject.layer == 4)
             isInHazard = false;
     }
-
+    void OnPause(InputValue input)
+    {
+        if (!isPaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            uiAnimator.SetBool("isPaused", true);
+            isPaused = true;
+        }
+        else { isPaused = false;
+            uiAnimator.SetBool("isPaused", false);
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
     void Die()
     {
      //   yield return new WaitForSeconds(1);
