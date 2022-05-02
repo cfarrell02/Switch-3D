@@ -55,7 +55,7 @@ public class Door : MonoBehaviour
 
     IEnumerator stopRotating()
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(5);
         valveRotating=false;
     }
 }
