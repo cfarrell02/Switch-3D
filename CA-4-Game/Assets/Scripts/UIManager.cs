@@ -12,6 +12,11 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("Office Block");
     }
 
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+
     // Start is called before the first frame update
     void Start()
     {

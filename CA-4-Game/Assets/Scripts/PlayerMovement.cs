@@ -13,9 +13,10 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     public float speed = 15f, gravity = -9.8f, groundDistance = 2f, jumpHeight = 3f, sprintModifier = 1.5f, maxHealth;
     public Transform groundCheck;
-    public LayerMask groundMask;
-    private bool isGrounded, isSprinting, isSwitched, isAtButton, physicsObject, holdingObject, isInHazard, isAtValve,isCrouching;
+    public LayerMask groundMask,physicsMask;
+    private bool  isSprinting, isSwitched, isAtButton, physicsObject, holdingObject, isInHazard, isAtValve,isCrouching;
     public Animator animator, uiAnimator;
+    int isGrounded;
     Animator buttonAnimator;
     AudioSource audioSource;
     public AudioClip[] footsteps;
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         health = maxHealth;
         holdingObject = false;
         characterController = GetComponent<CharacterController>();
-        isSwitched = false;
+        isSwitched = true;
         audioSource = GetComponent<AudioSource>();
     }
     // Update is called once per frame
@@ -76,37 +77,51 @@ public class PlayerMovement : MonoBehaviour
     {
         holdingObject = val;
     }
-
-    void OnTriggerEnter(Collider other)
+    public void InteractEnter(Collider other)
     {
-        if(other.gameObject.name.Equals("Valve Box"))
+        if (other.gameObject.name.Equals("Valve Box"))
         {
             isAtValve = true;
-        }else
-        if (other.gameObject.layer == 4)
+        }
+        
+        else if (other.gameObject.layer == 7)
         {
-            isInHazard = true;
-        }else if(other.gameObject.layer == 7)
-        {
-            isAtButton = true;
             buttonAnimator = other.gameObject.GetComponent<Animator>();
-        }else if(other.gameObject.layer == 8)
+            isAtButton = true;
+            
+        }
+        else if (other.gameObject.layer == 8 && !holdingObject)
         {
             physicsObject = true;
             physicsItem = other.gameObject;
         }
     }
-     void OnTriggerExit(Collider other)
+
+    public void InteractExit(Collider other)
     {
         if (other.gameObject.name.Equals("Valve Box"))
         {
             isAtValve = false;
-        }else
+        }
+        else
         if (other.gameObject.layer == 7)
             isAtButton = false;
-        else if (other.gameObject.layer == 8)
+        else if (other.gameObject.layer == 8 && !holdingObject)
+        {
             physicsObject = false;
-        else if (other.gameObject.layer == 4)
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 4)
+        {
+            isInHazard = true;
+        }
+    }
+     void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 4)
             isInHazard = false;
     }
     void OnPause(InputValue input)
@@ -142,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     void Sound()
     {
         int index = Random.Range(0, footsteps.Length - 1);
-        if (moveDirection.magnitude > 0 && isGrounded && !audioSource.isPlaying)
+        if (moveDirection.magnitude > 0 && isGrounded!=0 && !audioSource.isPlaying)
         {
             audioSource.PlayOneShot(footsteps[index]);
         }
@@ -155,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
        // print("Is Near Physics Object " + physicsObject + "\n Is Holding it? " + holdingObject);
         if (isAtButton && !uiAnimator.GetBool("teleport"))
             StartCoroutine(teleport());
-        if (physicsObject && !holdingObject)
+        if (physicsObject && !holdingObject && !isAtValve)
         {
 
 
@@ -179,14 +194,15 @@ public class PlayerMovement : MonoBehaviour
         
         } if (isAtValve)
         {
-            
+            holdingObject = false;
+            physicsObject = false;
             door.OpenDoor();
         }
     }
 
     IEnumerator teleport()
         {
-        buttonAnimator.SetBool("IsPressed", true);
+        //buttonAnimator.SetBool("IsPressed", true);
         isPaused = true;
         uiAnimator.SetBool("teleport", true);
         
@@ -206,7 +222,7 @@ public class PlayerMovement : MonoBehaviour
         isPaused = false;
         yield return new WaitForSeconds(5);
         uiAnimator.SetBool("teleport", false);
-        buttonAnimator.SetBool("IsPressed", false);
+       // buttonAnimator.SetBool("IsPressed", false);
 
     }
 
@@ -228,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
     void OnJump(InputValue input)
     {
             
-            if (isGrounded) { 
+            if (isGrounded==1 ||( isGrounded == 2 && !holdingObject)) { 
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
            
     }
@@ -238,8 +254,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if(isGrounded && velocity.y < 0)
+        if (Physics.CheckSphere(groundCheck.position, groundDistance, groundMask)) isGrounded = 1;
+        else if (Physics.CheckSphere(groundCheck.position, groundDistance, physicsMask)) isGrounded = 2;
+        else isGrounded = 0;
+        if(isGrounded !=0 && velocity.y < 0)
         {
             velocity.y = -2f;
         }

@@ -41,4 +41,13 @@ public class MouseLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 60f);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        playerMovement.InteractEnter(other);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        playerMovement.InteractExit(other);
+    }
 }
