@@ -126,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnPause(InputValue input)
     {
+        uiAnimator.SetBool("Settings", false);
         if (!isPaused)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -142,6 +143,11 @@ public class PlayerMovement : MonoBehaviour
      //   yield return new WaitForSeconds(1);
         isPaused = true;
         uiAnimator.SetBool("isDead", true);
+        UIManager[] uI = FindObjectsOfType<UIManager>();
+        foreach (UIManager ui in uI)
+        {
+            DestroyImmediate(ui);
+        }
         StartCoroutine(returnToMenu());
     }
 
@@ -194,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
         
         } if (isAtValve)
         {
+            physicsItem = null;
             holdingObject = false;
             physicsObject = false;
             door.OpenDoor();

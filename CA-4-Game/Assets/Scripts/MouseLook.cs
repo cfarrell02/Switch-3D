@@ -9,16 +9,28 @@ public class MouseLook : MonoBehaviour
     Vector2 lookDirection;
     public float lookSpeed = 100f, xRotation = 0f;
     [SerializeField] private PlayerMovement playerMovement;
+    public  HUDManager hudManager;
     // Start is called before the first frame update
     void Start()
     {
-        lookSpeed /= 1000;
+
+        UIManager uIManager = FindObjectOfType<UIManager>();
+        if (uIManager != null)
+        {
+            lookSpeed = uIManager.lookSensitivity;
+            lookSpeed /= 1000;
+        }
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(lookSpeed != hudManager.lookSensitivity/1000)
+        {
+            lookSpeed = hudManager.lookSensitivity;
+            lookSpeed /= 1000;
+        }
         if (!playerMovement.isPaused)
         {
             Look();
