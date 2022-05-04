@@ -7,27 +7,20 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Animator uiAnimator;
-    public float lookSensitivity = 100f;
+    public SettingsManager settings;
 
 
     void Awake()
     {
-        int numGameSessions = FindObjectsOfType<UIManager>().Length;
-        if (numGameSessions > 1 )
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        
     }
 
    
 
     public void setSensitivity(float sensitivity)
     {
-        lookSensitivity = sensitivity;
+        if(settings != null)
+        settings.sensitivity = sensitivity;
     }
 
     public void toggleFullScreen(bool val)
@@ -63,7 +56,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        settings = FindObjectOfType<SettingsManager>();
     }
 
     // Update is called once per frame
