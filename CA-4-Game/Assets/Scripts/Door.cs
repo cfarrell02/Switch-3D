@@ -7,6 +7,7 @@ public class Door : MonoBehaviour
     public GameObject doorObject, valve;
     Animator doorAnimator;
     public PlayerMovement playerMovement;
+    public TutorialManagement tutorial;
     bool hasValve, isOpen, valveRotating;
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,11 @@ public class Door : MonoBehaviour
         {
             valve.transform.Rotate(0,1,0);
         }
+    }
+
+    public bool isDoorOpen()
+    {
+        return isOpen;
     }
 
     void OnTriggerEnter(Collider other)
@@ -57,5 +63,9 @@ public class Door : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         valveRotating=false;
+        if (tutorial.isAtDoor)
+        {
+            tutorial.setCrouchText();
+        }
     }
 }
