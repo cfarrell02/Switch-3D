@@ -9,16 +9,32 @@ public class MouseLook : MonoBehaviour
     Vector2 lookDirection;
     public float lookSpeed = 100f, xRotation = 0f;
     [SerializeField] private PlayerMovement playerMovement;
+    public SettingsManager settings;
     // Start is called before the first frame update
     void Start()
     {
-        lookSpeed /= 1000;
+
+        settings = FindObjectOfType<SettingsManager>();
+        if (settings != null)
+        {
+            lookSpeed = settings.sensitivity;
+            lookSpeed /= 1000;
+        }
+        else
+        {
+            lookSpeed = 100f / 1000;
+        }
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (settings != null && lookSpeed != settings.sensitivity/1000)
+        {
+            lookSpeed = settings.sensitivity;
+            lookSpeed /= 1000;
+        }
         if (!playerMovement.isPaused)
         {
             Look();
