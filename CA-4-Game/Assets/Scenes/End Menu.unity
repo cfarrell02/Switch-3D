@@ -6100,6 +6100,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 715581911}
+    - target: {fileID: 6000594568343144064, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
     - target: {fileID: 6000594568426558384, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6112,6 +6116,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1693114736}
+    - target: {fileID: 6000594568624404157, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
     - target: {fileID: 6000594568630054048, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6136,6 +6144,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 139315456}
+    - target: {fileID: 6000594568740177370, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: e5c9f05baea5c6a43a6e0c5b3463ce5e, type: 2}
+    - target: {fileID: 6000594568764667144, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
     - target: {fileID: 6000594568909742610, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6172,6 +6188,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1976035947}
+    - target: {fileID: 6000594568990878651, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
     - target: {fileID: 6000594569149679228, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6208,6 +6228,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 686181382}
+    - target: {fileID: 6000594569339097171, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
     - target: {fileID: 6000594569362467904, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6256,6 +6280,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1406922731}
+    - target: {fileID: 6000594569553550061, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
+    - target: {fileID: 6000594569638238525, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
     - target: {fileID: 6000594569639176385, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -6340,6 +6372,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1863714233}
+    - target: {fileID: 6000594569800989858, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: 346069641173e4e428e92b39be7e6f61, type: 2}
     - target: {fileID: 6000594569801764464, guid: bb2c94830e9a9434ea6168421716a20f, type: 3}
       propertyPath: m_Mesh
       value: 
