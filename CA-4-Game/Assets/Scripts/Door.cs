@@ -9,9 +9,11 @@ public class Door : MonoBehaviour
     public PlayerMovement playerMovement;
     public TutorialManagement tutorial;
     bool hasValve, isOpen, valveRotating;
+    public ParticleSystem sparks;
     // Start is called before the first frame update
     void Start()
     {
+        sparks.Stop();
         doorAnimator = doorObject.GetComponent<Animator>();
         hasValve = false;
       // valveBox = transform.Find("Valve Box").gameObject;
@@ -63,6 +65,7 @@ public class Door : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         valveRotating=false;
+        sparks.Play();
         if (tutorial.isAtDoor)
         {
             tutorial.setCrouchText();
