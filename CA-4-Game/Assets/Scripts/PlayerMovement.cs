@@ -19,12 +19,13 @@ public class PlayerMovement : MonoBehaviour
     int isGrounded;
     Animator buttonAnimator;
     AudioSource audioSource;
+    public AudioClip buttonSound;
     public AudioClip[] footsteps;
     public bool isPaused = false;
     public GameObject camera;
     GameObject physicsItem;
     CharacterController characterController;
-    private float health;
+    private float health, prevVelocity;
     [SerializeField]
     private TextMeshProUGUI healthText;
     [SerializeField] private Door door;
@@ -43,6 +44,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Abs(velocity.magnitude) < 5 && Mathf.Abs(prevVelocity) > 20)
+        {
+            float damage = Mathf.Abs(velocity.magnitude - prevVelocity);
+            health -= damage;
+        }
+        prevVelocity = velocity.magnitude;
+        
         if(health >=0)
             healthText.text = ((int) health)+"";
         if (!isPaused)
@@ -174,6 +182,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnUse(InputValue input)
     {
+        camera.GetComponent<LevelProgress>().OnUse();
        // print("Is Near Physics Object " + physicsObject + "\n Is Holding it? " + holdingObject);
         if (isAtButton && !uiAnimator.GetBool("teleport"))
             StartCoroutine(teleport());
@@ -214,6 +223,8 @@ public class PlayerMovement : MonoBehaviour
         buttonAnimator.SetBool("IsPressed", true);
         isPaused = true;
         uiAnimator.SetBool("teleport", true);
+        audioSource.PlayOneShot(buttonSound);
+        
         
         yield return new WaitForSeconds(1.1f);
         characterController.enabled = false;
@@ -244,11 +255,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnSprint(InputValue input)
     {
-        if (input.isPressed)
-        {
-            isSprinting = true;
-        }else
-            isSprinting=false;
+        isSprinting = input.isPressed;
     }
 
     void OnJump(InputValue input)
