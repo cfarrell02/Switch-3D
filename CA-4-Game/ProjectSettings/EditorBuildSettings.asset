@@ -14,11 +14,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Outside Area.unity
     guid: 8ad4f5e9e92696c468367c7cb9450df8
-<<<<<<< HEAD
-  - enabled: 1
-    path: Assets/Scenes/End Menu.unity
-    guid: 7c608150a9b3c974d8fb79fff8495e3d
-=======
->>>>>>> 84a7180eb5c891d61dd517ea33c36c8f8d7625b5
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
