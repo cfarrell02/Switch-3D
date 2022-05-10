@@ -18991,7 +18991,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-103774
+  m_Name: pb_Mesh-139466
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -32445,6 +32445,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2028720759}
+    - target: {fileID: 6836525769241518845, guid: e02c44d16bc84a1479a397a140383c3d, type: 3}
+      propertyPath: m_SelectedEdges.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836525769241518845, guid: e02c44d16bc84a1479a397a140383c3d, type: 3}
+      propertyPath: m_SelectedFaces.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836525769241518845, guid: e02c44d16bc84a1479a397a140383c3d, type: 3}
+      propertyPath: m_SelectedVertices.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6836525769241518847, guid: e02c44d16bc84a1479a397a140383c3d, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -35362,7 +35374,7 @@ PrefabInstance:
     - target: {fileID: 3716621031178982391, guid: 59cc35556fe07fc47872d44fc8c5125a, type: 3}
       propertyPath: uiAnimator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1726601377}
     - target: {fileID: 3716621031178982391, guid: 59cc35556fe07fc47872d44fc8c5125a, type: 3}
       propertyPath: teleportDist
       value: 10000
@@ -72981,7 +72993,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-103760
+  m_Name: pb_Mesh-139452
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -210,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator teleport()
         {
+        if(buttonAnimator != null)
         buttonAnimator.SetBool("IsPressed", true);
         isPaused = true;
         uiAnimator.SetBool("teleport", true);
@@ -230,7 +231,8 @@ public class PlayerMovement : MonoBehaviour
         isPaused = false;
         yield return new WaitForSeconds(5);
         uiAnimator.SetBool("teleport", false);
-        buttonAnimator.SetBool("IsPressed", false);
+        if (buttonAnimator != null)
+            buttonAnimator.SetBool("IsPressed", false);
 
     }
 
