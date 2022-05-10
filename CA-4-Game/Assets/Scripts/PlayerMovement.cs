@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI healthText;
     [SerializeField] private Door door;
+    [SerializeField] int teleportDist = 200;
 
     void Start()
     {
@@ -218,12 +219,12 @@ public class PlayerMovement : MonoBehaviour
         if (!isSwitched)
         {
             isSwitched = true;
-            transform.position = new Vector3(transform.position.x - 200, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x - teleportDist, transform.position.y, transform.position.z);
         }
         else
         {
             isSwitched = false;
-            transform.position = new Vector3(transform.position.x + 200, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x + teleportDist, transform.position.y, transform.position.z);
         }
         characterController.enabled = true;
         isPaused = false;
