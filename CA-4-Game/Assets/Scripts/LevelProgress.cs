@@ -7,7 +7,7 @@ public class LevelProgress : MonoBehaviour
 {
     bool isAtLift;
     public AudioSource audioSource;
-    public AudioClip buttonSound;
+    public AudioClip buttonSound, liftSound;
     public Animator liftDoors;
 
     public void OnUse()
@@ -23,6 +23,8 @@ public class LevelProgress : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         liftDoors.SetBool("Open", false);
+        yield return new WaitForSeconds(2);
+        audioSource.PlayOneShot(liftSound,.2f);
         yield return new WaitForSeconds(4);
         int currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentScene + 1);

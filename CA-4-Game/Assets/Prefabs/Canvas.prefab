@@ -1445,13 +1445,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d77bb470fd6e0f5479d73ee8134b8925, type: 3}
---- !u!224 &5317640315017525361 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8116087118431868476, guid: d77bb470fd6e0f5479d73ee8134b8925, type: 3}
-  m_PrefabInstance: {fileID: 4138297381641465421}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5317640315053984151 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8116087118389700570, guid: d77bb470fd6e0f5479d73ee8134b8925, type: 3}
+  m_PrefabInstance: {fileID: 4138297381641465421}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &5317640315017525361 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8116087118431868476, guid: d77bb470fd6e0f5479d73ee8134b8925, type: 3}
   m_PrefabInstance: {fileID: 4138297381641465421}
   m_PrefabAsset: {fileID: 0}
