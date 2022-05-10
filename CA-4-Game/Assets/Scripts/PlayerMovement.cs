@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(velocity.y) < 5 && Mathf.Abs(prevVelocity) > 20)
         {
             audioSource.PlayOneShot(damageSound);
-            float damage = Mathf.Abs(velocity.y - prevVelocity);
+            float damage = Mathf.Abs(velocity.y - prevVelocity) * 4;
             health -= damage;
         }
         prevVelocity = velocity.y;
