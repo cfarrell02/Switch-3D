@@ -31,9 +31,13 @@ public class PlayerMovement : MonoBehaviour
     private TextMeshProUGUI healthText;
     [SerializeField] private Door door;
     [SerializeField] int teleportDist = 200;
+    private SettingsManager settingsManager;
 
     void Start()
     {
+        settingsManager = FindObjectOfType<SettingsManager>();
+        health = settingsManager.currentHealth;
+        
         calmMusic.Stop();
         //synthMusic.Stop();
         isCrouching = false;
@@ -47,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Mathf.Abs(velocity.y) < 5 && Mathf.Abs(prevVelocity) > 20)
         {
             audioSource.PlayOneShot(damageSound);
@@ -68,11 +73,12 @@ public class PlayerMovement : MonoBehaviour
                 audioSource.PlayOneShot(damageSound);
             health-=35*Time.deltaTime;
         }
-        if(health <= 0)
+        settingsManager.currentHealth = health;
+        if (health <= 0)
         {
             Die();
         }
-        
+       
     }
 
     public void OnCrouch(InputValue input)

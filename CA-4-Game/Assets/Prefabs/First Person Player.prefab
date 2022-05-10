@@ -41,9 +41,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5936542246785339160, guid: 83b3e6eda135c164894c237374c1194e, type: 2}
-  m_audioClip: {fileID: 8300000, guid: c089bf6eb49f64383bd6aa56792b6fb9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: beb72f6152dc32b49b72485aa8a194f5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.14
+  m_Volume: 0.066
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -747,6 +747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 588513475}
   buttonSound: {fileID: 8300000, guid: c7f36efc8d59cc444a6d1c88d88efeef, type: 3}
+  liftSound: {fileID: 8300000, guid: 1a0a65eda48187843930a7912c676f22, type: 3}
   liftDoors: {fileID: 0}
 --- !u!1001 &3716621030078904047
 PrefabInstance:

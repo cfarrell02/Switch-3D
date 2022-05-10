@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
-    public float sensitivity = 100f;
+    public float sensitivity = 100f,currentHealth = 100f;
+    
 
     void Awake()
     {
