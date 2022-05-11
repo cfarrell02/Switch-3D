@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 15f, gravity = -9.8f, groundDistance = 2f, jumpHeight = 3f, sprintModifier = 1.5f, maxHealth = 100;
     public Transform groundCheck;
     public LayerMask groundMask,physicsMask;
-    private bool  isSprinting, isSwitched, isAtButton, physicsObject, holdingObject, isInHazard, isAtValve,isCrouching;
+    private bool  isSprinting, isSwitched, isAtButton, physicsObject, holdingObject, isInHazard, isAtValve,isCrouching,crouchCooldown;
     public Animator animator, uiAnimator;
     int isGrounded;
     Animator buttonAnimator;
@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        crouchCooldown = false;
         settingsManager = FindObjectOfType<SettingsManager>();
         health = settingsManager.currentHealth;
         
@@ -52,12 +53,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         
-        if (Mathf.Abs(velocity.y) < 5 && Mathf.Abs(prevVelocity) > 20)
+        if (Mathf.Abs(velocity.y) < 5 && Mathf.Abs(prevVelocity) > 30 && !crouchCooldown)
         {
             audioSource.PlayOneShot(damageSound);
             float damage = Mathf.Abs(velocity.y - prevVelocity) * 4;
+            print(damage/4);
             health -= damage;
         }
+        if(!isCrouching)
         prevVelocity = velocity.y;
         
         if(health >=0)
@@ -85,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isCrouching)
         {
+            crouchCooldown = true;
             isCrouching = false;
             characterController.height = 1.94f;
         }
@@ -93,6 +97,11 @@ public class PlayerMovement : MonoBehaviour
             isCrouching=true;
             characterController.height = 1;
         }
+    }
+    IEnumerator resetCooldown()
+    {
+        yield return new WaitForSeconds(1);
+        crouchCooldown = false;
     }
     public void setHoldingObject(bool val)
     {
